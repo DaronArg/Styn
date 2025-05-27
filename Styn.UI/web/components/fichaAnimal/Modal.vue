@@ -57,12 +57,11 @@
             <select
               id="raza"
               v-model="formData.raza"
+              
               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             >
-              <option value="Holstein">Holstein</option>
-              <option value="Jersey">Jersey</option>
-              <option value="Angus">Angus</option>
-              <option value="Hereford">Hereford</option>
+              <option v-for="raza in razas" :value="raza.nombre">{{ raza.nombre }}</option>
+              
             </select>
           </div>
           
@@ -111,6 +110,9 @@
 </template>
 
 <script>
+import { useRazaStore } from '~/stores/raza'
+import { mapState } from 'pinia'
+
 export default {
   name: "FichaAnimalModal",
   props: {
@@ -135,15 +137,18 @@ export default {
         madre: "",
         padre: "",
       },
+      razas: [],
     }
   },
+  computed: {
+    ...mapState(useRazaStore, ['razas', 'loading']),
+  },
   mounted() {
+    this.fetchRazas()
     if (this.fichaAnimal) {
-      // Clonar el objeto para evitar modificar el original
       Object.keys(this.formData).forEach((key) => {
         if (key in this.fichaAnimal) {
           if (key === "fechaNacimiento") {
-            // Formatear la fecha para el input date (YYYY-MM-DD)
             const date = new Date(this.fichaAnimal[key])
             this.formData[key] = date.toISOString().split("T")[0]
           } else {
@@ -155,12 +160,17 @@ export default {
   },
   methods: {
     handleSubmit() {
-      // Convertir la fecha de string a objeto Date
       const formattedData = { ...this.formData }
-
-      // Emitir el evento save con los datos del formulario
       this.$emit("save", formattedData)
     },
+    async fetchRazas() {
+      const razaStore = useRazaStore()
+      try {
+       this.razas = await razaStore.fetchRazas()
+      } catch (error) {
+        console.error("Error fetching razas:", error)
+      }
+    }
   },
 }
 </script>

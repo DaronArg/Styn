@@ -120,8 +120,7 @@
 
 import { ref, computed } from 'vue';
 import authService from '../services/authService';
-import Toast from '../components/Toast.vue';
-import TimePicker from '~/components/TimePicker.vue';
+import Toast from '~/old/Toast.vue';
 
 const form = ref({
     Email: '',

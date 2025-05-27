@@ -1,22 +1,25 @@
 <template>
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 md:p-6">
+  <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 sm:p-6">
     <div class="flex items-center">
-      <div :class="`${color} p-3 rounded-full mr-4`">
+      <div :class="color" class="p-3 rounded-full">
         <Icon :name="icon" class="w-6 h-6" />
       </div>
-      <div>
-        <h5 class="text-gray-500 dark:text-gray-400 text-sm font-medium">{{ title }}</h5>
-        <div class="flex items-center">
-          <h3 class="text-2xl font-bold text-gray-900 dark:text-white">{{ value }}</h3>
-          <span v-if="change !== undefined" :class="[
-            'text-xs font-medium ml-2',
-            change >= 0 ? 'text-green-500' : 'text-red-500'
-          ]">
-            <Icon :name="change >= 0 ? 'lucide:trending-up' : 'lucide:trending-down'" class="w-3 h-3 inline" />
-            {{ Math.abs(change) }}%
-          </span>
+      <div class="ml-4">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ value }}</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400">{{ title }}</p>
+      </div>
+      <div v-if="change" class="ml-auto">
+        <div :class="[
+          Number(change) >= 0 ? 'text-green-500' : 'text-red-500',
+          'flex items-center'
+        ]">
+          <Icon 
+            :name="Number(change) >= 0 ? 'lucide:trending-up' : 'lucide:trending-down'" 
+            class="w-4 h-4 mr-1" 
+          />
+          <span class="text-sm font-medium">{{ Math.abs(Number(change)) }}%</span>
         </div>
-        <p v-if="subtitle" class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ subtitle }}</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ subtitle }}</p>
       </div>
     </div>
   </div>
@@ -26,27 +29,27 @@
 defineProps({
   title: {
     type: String,
-    required: true,
+    required: true
   },
   value: {
     type: String,
-    required: true,
+    required: true
   },
   icon: {
     type: String,
-    required: true,
+    required: true
   },
   color: {
     type: String,
-    default: "bg-blue-100 text-blue-500",
+    default: "bg-blue-100 text-blue-500"
   },
   change: {
-    type: Number,
-    default: undefined,
+    type: [String, Number],
+    default: null
   },
   subtitle: {
     type: String,
-    default: "",
-  },
+    default: ""
+  }
 })
 </script>

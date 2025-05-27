@@ -7,7 +7,7 @@
     ]"
   >
     <div class="h-full px-3 py-4 overflow-y-auto">
-      <div class="flex items-center justify-between mb-5">
+      <div class="flex items-center justify-center mb-5">
         <NuxtLink to="/" class="flex justify-center flex-row">
           <img src="../../public/9.png" class="h-16 mr-3" alt="Logo" />
           <!-- <span v-if="isOpen" class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Admin</span> -->
@@ -25,7 +25,7 @@
         <li v-for="item in menuItems" :key="item.path">
           <NuxtLink 
             :to="item.path" 
-            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-[#34B705] group"
+            class="flex items-center p-2 rounded-lg text-white hover:bg-[#34B705] group"
           >
             <Icon :name="item.icon" class="w-5 h-5 text-gray-500 dark:text-gray-400" />
             <span v-if="isOpen" class="ml-3">{{ item.name }}</span>
@@ -53,6 +53,11 @@ export default {
         // { name: "Productos", path: "/modules/products" },
         // { name: "Categorías", path: "/modules/categories" },
         { name: "Fichas Animales", path: "/modules/fichaAnimal" },
+        { name: "Lotes", path: "/modules/lotes" },
+        { name: "Raza", path: "/modules/raza" },
+        { name: "Secado", path: "/modules/Secado" },
+        { name: "Descartes", path: "/modules/descartes" },
+
         { name: "Configuración", path: "/settings" },
       ],
     }
